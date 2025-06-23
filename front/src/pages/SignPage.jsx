@@ -2,7 +2,7 @@ import React from 'react'
 
 const SignPage = () => {
   return (
-    <div>SignPage</div>
+    <div>SignInPage</div>
   )
 }
 
