@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignPage from "./pages/SignPage";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
       <Route path="/signin" element={<SignPage/>}/>
     </Routes>
   </BrowserRouter>
+  <Footer/>
     </>
   )
 }
