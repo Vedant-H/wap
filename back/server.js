@@ -3,7 +3,10 @@ import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt";
 import cors from "cors";
 import { json } from "express";
+import connectDB , {demo} from "./config/db.js"
 
+connectDB();
+demo();
 const app = express();
 
 app.use(cors())
