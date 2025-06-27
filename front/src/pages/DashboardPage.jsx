@@ -101,10 +101,9 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from '../components/ui/button'; // Adjust path if needed
 import EditNoteModal from '../components/EditNoteModal'; // Import the new modal component
+import { useAuth } from '../context/AuthContext';
 
 const DashboardPage = () => {
-    const { id: userId } = useParams();
-    const [userName, setUserName] = useState("");
     const [noteContent, setNoteContent] = useState("");
     const [notes, setNotes] = useState([]);
 
@@ -112,26 +111,16 @@ const DashboardPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [noteToEdit, setNoteToEdit] = useState(null); // Stores the full note object being edited
 
-    useEffect(() => {
-        async function getUser() {
-            try {
-                const result = await axios.get(`http://localhost:3000/api/user/${userId}`);
-                setUserName(result.data.username);
-            } catch (error) {
-                console.error("Error fetching username:", error);
-            }
-        }
-        getUser();
-    }, [userId]);
+    const {user}=useAuth(); 
 
     const fetchNotes = useCallback(async () => {
         try {
-            const result = await axios.get(`http://localhost:3000/api/notes/${userId}`); // Assuming this endpoint for notes by user
+            const result = await axios.get(`http://localhost:3000/api/notes/${user.id}`); // Assuming this endpoint for notes by user
             setNotes(result.data);
         } catch (error) {
             console.error("Error fetching notes:", error);
         }
-    }, [userId]);
+    }, [user.id]);
 
     useEffect(() => {
         fetchNotes();
@@ -168,7 +157,7 @@ const DashboardPage = () => {
 
         try {
             await axios.post("http://localhost:3000/api/notes/", {
-                user_id: userId,
+                user_id: user.id,
                 content: noteContent
             });
             setNoteContent("");
@@ -208,7 +197,7 @@ const DashboardPage = () => {
     return (
         <div>
             <h1>Dashboard</h1>
-            <h2>Welcome {userName}</h2>
+            <h2>Welcome {user.name}</h2>
 
             <h1>Create New Note</h1> {/* No longer "Edit Note" here */}
             <form onSubmit={AddNotes}>

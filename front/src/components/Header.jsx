@@ -1,14 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { useParams } from 'react-router';
+import { useAuth } from '../context/AuthContext';
 
 const tabs = [
   { name: 'Home', href: '/' },
   { name: 'Login', href: '/login' },
   { name: 'Register', href: '/signin' },
-  { name: 'Contact', href: '#contact' },
+ 
 ];
-
 const Header = () => {
+const {logout,login,user} = useAuth();
 
   const [hoveredTab, setHoveredTab] = useState(null);
   const [highlightStyle, setHighlightStyle] = useState({ left: 0, width: 0, opacity: 0 });
@@ -43,6 +44,11 @@ const Header = () => {
             </li>
           ))}
 
+          <li onClick={logout} className="z-10 block cursor-pointer px-4 py-2 text-sm font-medium transition-colors duration-200 hover:text-primary text-primary/60 tracking-tight relative"
+ >
+              LogOut
+          </li>
+
           {/* Floating highlight */}
           <div
             className="absolute rounded-full bg-secondary transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
@@ -54,6 +60,7 @@ const Header = () => {
               height: 'calc(100% - 12px)',
             }}
           />
+
         </ul>
       </header>
     </div>

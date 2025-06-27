@@ -5,38 +5,49 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import axios from 'axios';
 import {useLocation } from 'react-router-dom';
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 export function LoginForm({
   className,
   ...props
 }) {
 
-
+  const {login, register, isAuthenticated, isLoading} = useAuth();
   const location = useLocation().pathname;
   const navigate = useNavigate();
   const [Name, setName] = useState("");
   const [Password, setPassword] = useState("");
   const [Email, setEmail] = useState("");
 
-  const handleSubmit =async (e)=>{
-    e.preventDefault();
-    const url = location=="/login"?"http://localhost:3000/api/auth/login":"http://localhost:3000/api/auth/register";
-    const data = location=="/login"? {
-    "password": Password,
-    "email":Email
-    }:{
-    "username": Name,
-    "password": Password,
-    "email": Email
+  useEffect(() => {
+    if (isAuthenticated && !isLoading) {
+      navigate('/');
     }
-    const result = await axios.post(
-      url,data
-    )
-if(result.status===200){
-  // const user_id = result.data.user.id;
-  // localStorage.setItem("user_id",user_id);
-  navigate('/');}
+  }, [isAuthenticated, isLoading, navigate]);
+  const handleSubmit =async (e)=>{
+       e.preventDefault();
+
+    let authResult;
+    if (location === "/login") {
+      authResult = await login(Email, Password);
+    } else { // Assuming "/register"
+      authResult = await register(Name, Email, Password);
+    }
+
+    if (authResult.success) {
+      // For login, AuthContext handles setting user/token and setting axios default header
+      if (location === "/login") {
+        navigate('/'); // Navigate to home page or dashboard
+      } else { // For registration
+        navigate('/login');
+      }
+    }
+  };
+
+  if (isLoading) {
+    return <div>Loading authentication...</div>; // Simple loading state for auth check
+  
   }
 
   return (
