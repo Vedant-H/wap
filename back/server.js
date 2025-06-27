@@ -5,7 +5,9 @@ import cors from "cors";
 import { json } from "express";
 import connectDB , {demo} from "./config/db.js"
 import router from "./routes/authRoute.js";
+import userRoute from "./routes/userRoute.js"
 import verifyToken from './middleware/authMiddleware.js';
+import noteRoute from "./routes/notesRoute.js";
 connectDB();
 demo();
 const app = express();
@@ -15,6 +17,8 @@ app.use(json())
 app.use(express.urlencoded({extends:true}))
 
 app.use("/api/auth",router);
+app.use("/api/user",userRoute);
+app.use("/api/notes/",noteRoute);
 
 app.get("/",verifyToken, (req,res)=>{
 
