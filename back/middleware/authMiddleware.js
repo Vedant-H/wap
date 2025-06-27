@@ -1,5 +1,3 @@
-// middleware/authMiddleware.js
-
 import jwt from 'jsonwebtoken';
 
 const verifyToken = (req, res, next) => {
@@ -13,7 +11,6 @@ const verifyToken = (req, res, next) => {
 
     // Extract the token part
     const token = authHeader.split(' ')[1];
-    console.log(token);
     if (!token) {
         // This case should ideally be caught by the startsWith check, but good for explicit safety
         return res.status(401).json({ message: "No token, authorization denied." });

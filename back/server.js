@@ -18,8 +18,8 @@ app.use(express.urlencoded({extends:true}))
 
 app.use("/api/auth",router);
 app.use("/api/user",userRoute);
-app.use("/api/notes/",noteRoute);
-
+app.use("/api/notes/",verifyToken,noteRoute);
+app.use("/")
 app.get("/",verifyToken, (req,res)=>{
 
     res.send("Hello user");
