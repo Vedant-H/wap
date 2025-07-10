@@ -25,61 +25,18 @@ const EditNoteModal = ({ isOpen, note, onClose, onSave }) => {
         }
     };
 
-    // Simple modal styling (you'd typically use CSS modules or a styling library)
-    const modalOverlayStyle = {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 1000,
-    };
-
-    const modalContentStyle = {
-        backgroundColor: 'white',
-        padding: '20px',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-        width: '400px',
-        maxWidth: '90%',
-        zIndex: 1001,
-        display: 'flex',
-        flexDirection: 'column',
-    };
-
-    const textareaStyle = {
-        width: '100%',
-        minHeight: '100px',
-        padding: '10px',
-        marginBottom: '15px',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        boxSizing: 'border-box', // Include padding in width/height
-    };
-
-    const buttonContainerStyle = {
-        display: 'flex',
-        justifyContent: 'flex-end',
-        gap: '10px',
-    };
-
-
     return (
-        <div style={modalOverlayStyle}>
-            <div style={modalContentStyle}>
-                <h2>Edit Note</h2>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-blend-luminosity bg-opacity-50 backdrop-blur-xl">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 flex flex-col gap-4 border border-gray-100">
+                <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">Edit Note</h2>
                 <textarea
                     value={editedContent}
                     onChange={(e) => setEditedContent(e.target.value)}
-                    style={textareaStyle}
+                    className="resize-none rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300 min-h-[100px] bg-gray-50 text-gray-700"
                 />
-                <div style={buttonContainerStyle}>
-                    <Button type="button" onClick={onClose}>Cancel</Button>
-                    <Button type="button" onClick={handleSave}>Save Changes</Button>
+                <div className="flex justify-end gap-3 mt-2">
+                    <Button type="button" onClick={onClose} className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-4 py-1 rounded-lg">Cancel</Button>
+                    <Button type="button" onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-1 rounded-lg">Save Changes</Button>
                 </div>
             </div>
         </div>

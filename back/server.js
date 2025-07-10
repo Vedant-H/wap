@@ -8,6 +8,7 @@ import router from "./routes/authRoute.js";
 import userRoute from "./routes/userRoute.js"
 import verifyToken from './middleware/authMiddleware.js';
 import noteRoute from "./routes/notesRoute.js";
+import courseRoute from "./routes/courseRoute.js"
 connectDB();
 demo();
 const app = express();
@@ -19,12 +20,9 @@ app.use(express.urlencoded({extends:true}))
 app.use("/api/auth",router);
 app.use("/api/user",userRoute);
 app.use("/api/notes/",verifyToken,noteRoute);
-app.use("/")
-app.get("/",verifyToken, (req,res)=>{
+app.use('/uploads', express.static('uploads'));
+app.use("/api/courses",courseRoute);
 
-    res.send("Hello user");
-
-})
 
 app.listen(3000,()=>{
     console.log("Server Running On port 3000!");

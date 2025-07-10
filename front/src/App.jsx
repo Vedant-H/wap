@@ -8,6 +8,9 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import DashboardPage from "./pages/DashboardPage";
 import { AuthProvider } from "./context/AuthContext";
+import AddCourse from "./pages/AddCourse";
+import CourseList from "./components/CourseList";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
 
@@ -22,10 +25,10 @@ function App() {
       <Route path="/signin" element={<SignPage/>}/>
       <Route path="/dashboard/:id" element={<DashboardPage/>}/>
 
+      <Route path="/course" element={<AddCourse/>}/>
+      <Route path="/getCourses" element={<CourseList/>}/>
+       <Route path="/admin" element={<AdminPage/>}/>
 
-      <Route path="/courses" element={<CoursesPage/>} />
-          <Route path="/courses/:id" element={<CourseDetailPage/>} />
-          <Route path="/add-course" element={<AddCoursePage/>} />
     </Routes>
       <Footer/>
 
